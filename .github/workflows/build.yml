@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -19,17 +18,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Create Gradle Wrapper
+      run: gradle wrapper --gradle-version 8.4
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      continue-on-error: true
 
     - name: Build Debug APK
-      run: |
-        # Se o gradlew não existir no repositório, criamos um wrapper básico ou usamos comandos diretos
-        if [ ! -f "gradlew" ]; then
-          gradle wrapper
-        fi
-        ./gradlew assembleDebug
+      run: ./gradlew :app:assembleDebug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
