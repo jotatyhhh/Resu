@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Criando um botão de forma simples via código para a tela principal
         val button = Button(this).apply {
             text = "Ativar Camada de Sobreposição"
             setOnClickListener {
@@ -24,14 +23,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkOverlayPermissionAndStart() {
-        // O Android exige permissão especial para desenhar por cima de outros apps
         if (!Settings.canDrawOverlays(this)) {
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:$packageName")
             )
             startActivityForResult(intent, 100)
-            Toast.hometown(this, "Permita a sobreposição para continuar", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Permita a sobreposição para continuar", Toast.LENGTH_LONG).show()
         } else {
             startOverlayService()
         }
